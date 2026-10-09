@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoodBrew — Your Mood. Your Mix. Your Moment.</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <a href="#home" class="logo" aria-label="MoodBrew home">☕ Mood<span>Brew</span></a>
+  <button id="menuToggle" class="icon-btn" aria-label="Toggle navigation">☰</button>
+  <nav id="navLinks" aria-label="Main navigation">
+    <a href="#home" data-page="home">Home</a>
+    <a href="#create" data-page="create">Create Drink</a>
+    <a href="#menu" data-page="menu">Menu</a>
+    <a href="#book" data-page="book">Book a Seat</a>
+    <a href="#orders" data-page="orders">My Orders</a>
+    <a href="#about" data-page="about">About</a>
+  </nav>
+  <div class="sound" role="group" aria-label="Sound controls">
+    <button id="soundToggle" type="button" class="chip" aria-pressed="false">🔇 Sound OFF</button>
+    <input id="volume" type="range" min="0" max="100" value="50" aria-label="Volume">
+  </div>
+  <a href="#cart" class="cart-btn" aria-label="Open cart">🛒 <b id="cartCount">0</b></a>
+</header>
+
+<main id="main">
+<!-- ================= HOME ================= -->
+<section id="home" class="page">
+  <div class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Frontend demo · rule-based recommendations</p>
+      <h1>Your Mood. Your Mix. Your Moment.</h1>
+      <p class="sub">Tell us how you feel. We'll help you create your perfect drink.</p>
+      <div class="btn-row">
+        <a href="#mood" class="btn primary">Discover My Drink</a>
+        <a href="#create" class="btn ghost">Build Your Own</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div id="heroCup" class="cup-box big"></div>
+      <span class="float f1">🐉 Dragon fruit</span><span class="float f2">🌿 Fresh mint</span>
+      <span class="float f3">🍋 Lime</span><span class="float f4">✨ Sparkling</span>
+      <div id="particles" class="particles" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <div class="block"><h2>Popular Drinks</h2><div id="popularGrid" class="grid"></div></div>
+
+  <div id="mood" class="block">
+    <h2>How are you feeling today?</h2>
+    <div id="moodGrid" class="mood-grid" role="radiogroup" aria-label="Choose your mood"></div>
+    <div class="glass opts">
+      <label>Flavor<select id="qFlavor"><option value="any">Any</option><option value="sweet">Sweet</option><option value="fruity">Fruity</option><option value="creamy">Creamy</option><option value="bitter">Bitter</option><option value="refreshing">Refreshing</option></select></label>
+      <label>Temperature<select id="qTemp"><option value="any">Any</option><option value="iced">Iced</option><option value="hot">Hot</option></select></label>
+      <label>Drink base<select id="qBase"><option value="any">Any</option><option value="coffee">Coffee</option><option value="tea">Tea</option><option value="milk">Milk</option><option value="fruit">Fruit</option><option value="sparkling">Sparkling water</option></select></label>
+      <label>Sweetness<select id="qSweet"><option value="any">Any</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></label>
+      <label>Dietary<select id="qDiet"><option value="any">None</option><option value="dairyfree">Dairy-free</option><option value="lowsugar">Lower sugar</option></select></label>
+    </div>
+    <div id="moodResult" class="glass result" aria-live="polite"><p class="muted">Pick a mood above to see a recommendation.</p></div>
+  </div>
+
+  <div class="block"><h2>How It Works</h2>
+    <div class="grid steps">
+      <div class="glass"><span class="num">1</span><h3>Pick a mood</h3><p>Choose how you feel and answer optional questions.</p></div>
+      <div class="glass"><span class="num">2</span><h3>Get a match</h3><p>Simple, transparent rules choose a drink for you.</p></div>
+      <div class="glass"><span class="num">3</span><h3>Customize live</h3><p>Watch the cup and nutrition change instantly.</p></div>
+      <div class="glass"><span class="num">4</span><h3>Order &amp; reserve</h3><p>Place a demo order and book a simulated seat.</p></div>
+    </div>
+  </div>
+
+  <div class="block"><h2>Featured Interactive Preview</h2>
+    <div class="glass feature">
+      <div id="featCup" class="cup-box"></div>
+      <div><h3>Mango Mint Cooler</h3><p class="muted">Tap toppings to transform the drink.</p>
+        <div class="chips">
+          <button class="chip" data-act="featToggle" data-id="ice">🧊 Ice</button>
+          <button class="chip" data-act="featToggle" data-id="boba">⚫ Boba</button>
+          <button class="chip" data-act="featToggle" data-id="whip">☁️ Whipped cream</button>
+          <button class="chip" data-act="featToggle" data-id="fruit">🍊 Fruit</button>
+        </div>
+        <p id="featInfo" class="muted"></p>
+        <button class="btn primary" data-act="featCustomize">Customize this drink</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="block"><h2>Customer Rating Summary</h2><div id="ratingSummary" class="glass"></div></div>
+
+  <div class="block cta glass"><h2>Save your spot at the café</h2><p class="muted">Pick a table on our simulated floor plan.</p><a href="#book" class="btn primary">Reserve a Seat</a></div>
+</section>
+
+<!-- ================= CREATE ================= -->
+<section id="create" class="page" hidden>
+  <div class="page-head"><h2>Create Your Drink</h2><p class="muted">Add ingredients and watch your cup transform in real time.</p></div>
+  <div class="builder">
+    <div class="builder-left">
+      <div class="glass cup-panel">
+        <div id="builderCup" class="cup-box"></div>
+        <p class="vol"><b id="volText">0 ml</b> total volume</p>
+        <div class="btn-row">
+          <button id="undoBtn" class="btn ghost">↶ Undo Last Change</button>
+          <button id="resetBtn" class="btn ghost">Reset Recipe</button>
+        </div>
+      </div>
+      <div class="glass"><h3>Live Nutrition</h3><div id="nutri"></div>
+        <p class="note">Estimated nutrition values. Actual values vary by ingredient brand, serving size, and preparation.</p></div>
+      <div class="glass"><h3>Flavor Profile</h3><div id="flavorBars"></div></div>
+    </div>
+    <div class="builder-right">
+      <div class="glass"><h3>Preset Recipes</h3><div id="presetChips" class="chips"></div></div>
+      <div class="glass"><h3>Drink Bases</h3><div id="ingBase" class="ing-list"></div></div>
+      <div class="glass"><h3>Flavors</h3><div id="ingFlavor" class="ing-list"></div></div>
+      <div class="glass"><h3>Toppings</h3><div id="ingTopping" class="ing-list"></div></div>
+      <div class="glass"><h3>Flavor Assistant</h3><p class="note">Simple rules, not a real AI model.</p><div id="suggestions"></div></div>
+      <div class="glass"><h3>Recipe Preference (optional)</h3>
+        <label class="inline">Goal
+          <select id="goalSelect"><option value="none">No specific preference</option><option value="lowcal">Lower estimated calories</option><option value="lowsugar">Less added sugar</option><option value="dairyfree">Dairy-free</option><option value="fruity">More fruity</option><option value="creamy">Creamier texture</option></select></label>
+        <div id="goalResult"></div>
+      </div>
+      <div class="glass">
+        <label>Recipe name<input id="recipeName" type="text" maxlength="40" value="My Custom Drink"></label>
+        <p class="price-line">Price: <b id="builderPrice">$0.00</b></p>
+        <div class="btn-row">
+          <button id="saveRecipeBtn" class="btn ghost">♥ Save Recipe</button>
+          <button id="addCustomBtn" class="btn primary">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MENU ================= -->
+<section id="menu" class="page" hidden>
+  <div class="page-head"><h2>Café Menu</h2></div>
+  <div class="glass filters">
+    <label>Search<input id="fSearch" type="search" placeholder="Search drinks…"></label>
+    <label>Category<select id="fCat"><option value="all">All</option><option>Coffee</option><option>Milk Drinks</option><option>Coolers</option><option>Tea</option></select></label>
+    <label>Mood<select id="fMood"><option value="all">All</option><option value="energetic">Energetic</option><option value="relaxed">Relaxed</option><option value="happy">Happy</option><option value="adventurous">Adventurous</option><option value="refresh">Refresh Me</option><option value="focused">Focused</option><option value="cozy">Feeling Cozy</option></select></label>
+    <label>Temperature<select id="fTemp"><option value="all">All</option><option value="iced">Iced</option><option value="hot">Hot</option></select></label>
+    <label>Dietary<select id="fDiet"><option value="all">All</option><option value="dairyfree">Dairy-free</option><option value="lowsugar">Lower sugar (≤15 g)</option><option value="lowcal">Lighter (≤120 kcal)</option></select></label>
+    <label>Sort<select id="fSort"><option value="pop">Popularity</option><option value="rating">Rating</option><option value="price">Price (low to high)</option></select></label>
+  </div>
+  <div id="menuGrid" class="grid"></div>
+
+  <div class="block"><h2>Rate &amp; Review</h2>
+    <div class="reviews-wrap">
+      <form id="reviewForm" class="glass" novalidate>
+        <label>Drink<select id="rDrink"></select></label><span class="err" id="rDrinkErr"></span>
+        <label>Your name<input id="rName" type="text" maxlength="30"></label><span class="err" id="rNameErr"></span>
+        <div>Your rating <span id="starInput" class="star-input" role="group" aria-label="Star rating"></span></div><span class="err" id="rStarsErr"></span>
+        <label>Feedback<textarea id="rText" rows="3" maxlength="200"></textarea></label><span class="err" id="rTextErr"></span>
+        <button class="btn primary" type="submit">Submit Review</button>
+      </form>
+      <div class="glass"><h3>Latest Reviews</h3><p class="note">Ratings marked "demo" are sample data, not verified customer ratings.</p><div id="reviewList"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOOK ================= -->
+<section id="book" class="page" hidden>
+  <div class="page-head"><h2>Book a Seat</h2><p class="muted">Seat availability is simulated. Shared real-time booking needs a backend.</p></div>
+  <div class="book-layout">
+    <div class="glass">
+      <div class="filters">
+        <label>Date<input id="bDate" type="date"></label>
+        <label>Guests<select id="bGuests"></select></label>
+      </div>
+      <h3>Time slot</h3><div id="slotList" class="chips"></div>
+      <div class="legend"><span class="seat available">&nbsp;</span> Available <span class="seat occupied">&nbsp;</span> Occupied <span class="seat selected">&nbsp;</span> Selected</div>
+      <div id="floor" class="floor"></div>
+    </div>
+    <div>
+      <form id="bookForm" class="glass" novalidate>
+        <h3>Your reservation</h3>
+        <p id="selSummary" class="muted">No seats selected.</p><span class="err" id="bSeatsErr"></span>
+        <label>Name<input id="bName" type="text" maxlength="40"></label><span class="err" id="bNameErr"></span>
+        <label>Contact number<input id="bPhone" type="tel" maxlength="15"></label><span class="err" id="bPhoneErr"></span>
+        <button class="btn primary" type="submit">Confirm Demo Reservation</button>
+      </form>
+      <div id="resSummary" class="glass" hidden></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DASHBOARD ================= -->
+<section id="orders" class="page" hidden>
+  <div class="page-head"><h2>My Dashboard</h2><p class="muted">Demo data stored in this browser (localStorage).</p></div>
+  <div class="dash">
+    <div class="glass"><h3>My Orders</h3><div id="ordersList"></div></div>
+    <div class="glass"><h3>My Reservations</h3><div id="resList"></div></div>
+    <div class="glass"><h3>Saved Favorite Drinks</h3><div id="favList"></div></div>
+    <div class="glass"><h3>Recently Created Recipes</h3><div id="recentList"></div></div>
+    <div class="glass"><h3>Review History</h3><div id="reviewHistory"></div></div>
+  </div>
+</section>
+
+<!-- ================= CART ================= -->
+<section id="cart" class="page" hidden>
+  <div id="cartView">
+    <div class="page-head"><h2>Your Cart</h2></div>
+    <div class="cart-layout">
+      <div id="cartItems"></div>
+      <aside class="glass">
+        <h3>Order Summary</h3><div id="cartTotals"></div>
+        <form id="checkoutForm" novalidate>
+          <label>Name<input id="cName" type="text" maxlength="40"></label><span class="err" id="cNameErr"></span>
+          <label>Contact number<input id="cPhone" type="tel" maxlength="15"></label><span class="err" id="cPhoneErr"></span>
+          <label>Pickup or dine-in<select id="cMode"><option value="pickup">Pickup</option><option value="dine-in">Dine-in (5% service charge)</option></select></label>
+          <label>Special instructions (optional)<textarea id="cNotes" rows="2" maxlength="120"></textarea></label>
+          <button class="btn primary" type="submit">Review Order</button>
+        </form>
+        <p class="note">Demo only. No real payment is taken and no café receives this order.</p>
+      </aside>
+    </div>
+  </div>
+  <div id="successView" class="glass success" hidden></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="page" hidden>
+  <div class="page-head"><h2>About MoodBrew</h2></div>
+  <div class="glass about">
+    <p>MoodBrew is a hackathon frontend prototype built with HTML, CSS and vanilla JavaScript.</p>
+    <p>Recommendations come from transparent, rule-based scoring. They are not a real AI model, and we make no claim that any drink changes your emotions.</p>
+    <p>Nutrition values are estimates from sample per-serving data in <code>script.js</code>. Orders, reservations, ratings and seat availability are simulated and saved only in your browser.</p>
+  </div>
+</section>
+</main>
+
+<footer class="footer">MoodBrew · Frontend demo prototype · No real orders, payments or live seat data</footer>
+
+<dialog id="detailDialog"></dialog>
+<dialog id="confirmDialog"></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
